@@ -1,50 +1,19 @@
-export async function POST(request) {
+export async function POST(req) {
   try {
-    const body = await request.json();
+    const data = await req.json();
 
-    console.log("📦 Pedidos recibidos:", body);
+    console.log("📦 recibido:", data);
 
-    return new Response(JSON.stringify({
+    return Response.json({
       ok: true,
-      recibidos: body.length
-    }), {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type"
-      }
+      message: "Upload recibido correctamente",
+      data
     });
 
   } catch (error) {
-    return new Response(JSON.stringify({
+    return Response.json({
       ok: false,
       error: error.message
-    }), {
-      status: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*"
-      }
-    });
+    }, { status: 500 });
   }
-}
-
-// 👇 esto es CLAVE para CORS preflight
-export async function OPTIONS() {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type"
-    }
-  });
-}
-
-// test en navegador
-export async function GET() {
-  return Response.json({
-    ok: true,
-    message: "RouteHub API viva 🚀"
-  });
 }
