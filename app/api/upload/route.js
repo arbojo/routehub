@@ -1,19 +1,12 @@
+export async function GET() {
+  return Response.json({ ok: true, message: "API viva" });
+}
+
 export async function POST(req) {
-  try {
-    const data = await req.json();
+  const data = await req.json();
 
-    console.log("📦 recibido:", data);
-
-    return Response.json({
-      ok: true,
-      message: "Upload recibido correctamente",
-      data
-    });
-
-  } catch (error) {
-    return Response.json({
-      ok: false,
-      error: error.message
-    }, { status: 500 });
-  }
+  return Response.json({
+    ok: true,
+    received: data
+  });
 }
